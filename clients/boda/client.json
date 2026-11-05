@@ -1,0 +1,362 @@
+{
+  "business": {
+    "name": "Lucía & Tomás",
+    "tagline": "NOS CASAMOS",
+    "demoLabel": "INVITACIÓN DE EJEMPLO · SAMPLE INVITATION",
+    "copyrightYear": "2027",
+    "established": "13.03.2027"
+  },
+  "seo": {
+    "title": "Lucía & Tomás · Nos casamos el 13 de marzo de 2027",
+    "description": "Invitación de boda de Lucía y Tomás: programa del día, lugar, álbum de fotos y confirmación de asistencia.",
+    "canonicalUrl": "",
+    "businessType": "LocalBusiness",
+    "includeStructuredData": false
+  },
+  "language": {
+    "default": "es",
+    "available": [
+      "es",
+      "en"
+    ],
+    "numberLocale": "es-AR"
+  },
+  "brand": {
+    "logoImage": "",
+    "colors": {
+      "primary": "#c8a98a",
+      "secondary": "#24312a",
+      "backgroundDark": "#101a15",
+      "accentLight": "#e8cfb4",
+      "backgroundLight": "#f2f0e8",
+      "backgroundSoft": "#e7e4d8",
+      "muted": "#9aa597",
+      "white": "#fbfaf5",
+      "button": "#c8a98a",
+      "buttonText": "#17201b",
+      "servicesBackground": "#17231d",
+      "heroBackground": "#0f1813",
+      "manifestoBackground": "#14201a",
+      "footerBackground": "#0e1612",
+      "textOnDark": "#f4f1e8",
+      "textMutedOnDark": "#aab5a6",
+      "textMutedOnLight": "#5f665c",
+      "cardBackground": "#e9e6d9",
+      "cardBorder": "#d2cdb9",
+      "text": "#18211c"
+    },
+    "favicon": ""
+  },
+  "images": {
+    "hero": "assets/hero.svg",
+    "heroAlt": {
+      "es": "Arco floral con anillos entrelazados",
+      "en": "Floral arch with interlocking rings"
+    },
+    "manifesto": "assets/manifesto.svg",
+    "gallery": [
+      {
+        "src": "assets/galeria-historia.svg",
+        "large": "assets/galeria-historia.svg",
+        "alt": {
+          "es": "Corona de hojas con dos anillos",
+          "en": "Leaf wreath with two rings"
+        },
+        "caption": {
+          "es": "Nuestra historia",
+          "en": "Our story"
+        }
+      },
+      {
+        "src": "assets/galeria-ceremonia.svg",
+        "large": "assets/galeria-ceremonia.svg",
+        "alt": {
+          "es": "Arco de ceremonia entre ramas de olivo",
+          "en": "Ceremony arch among olive branches"
+        },
+        "caption": {
+          "es": "La ceremonia",
+          "en": "The ceremony"
+        }
+      },
+      {
+        "src": "assets/galeria-fiesta.svg",
+        "large": "assets/galeria-fiesta.svg",
+        "alt": {
+          "es": "Guirnaldas de luces cálidas",
+          "en": "Strings of warm lights"
+        },
+        "caption": {
+          "es": "La fiesta",
+          "en": "The party"
+        }
+      }
+    ]
+  },
+  "businessDetails": {
+    "address": {
+      "es": "Finca Los Aromos",
+      "en": "Finca Los Aromos"
+    },
+    "addressNote": {
+      "es": "Dirección y mapa en la invitación definitiva",
+      "en": "Address and map in the final invitation"
+    },
+    "hoursNote": {
+      "es": "Confirmá tu asistencia antes del 13 de febrero de 2027.",
+      "en": "Please RSVP before February 13, 2027."
+    },
+    "hours": [
+      {
+        "label": {
+          "es": "FECHA",
+          "en": "DATE"
+        },
+        "value": {
+          "es": "Sábado 13 de marzo",
+          "en": "Saturday, March 13"
+        }
+      },
+      {
+        "label": {
+          "es": "RECEPCIÓN",
+          "en": "ARRIVAL"
+        },
+        "value": {
+          "es": "16:30 hs",
+          "en": "4:30 PM"
+        }
+      },
+      {
+        "label": {
+          "es": "VESTIMENTA",
+          "en": "DRESS CODE"
+        },
+        "value": {
+          "es": "Elegante sport",
+          "en": "Smart casual"
+        }
+      }
+    ]
+  },
+  "contact": {
+    "phone": "",
+    "email": "",
+    "whatsapp": "",
+    "socials": []
+  },
+  "booking": {
+    "url": "",
+    "mode": "modal"
+  },
+  "services": [
+    {
+      "id": "ceremonia",
+      "title": {
+        "es": "Ceremonia",
+        "en": "Ceremony"
+      },
+      "description": {
+        "es": "Intercambio de votos al aire libre, entre olivos.",
+        "en": "Vows outdoors, among the olive trees."
+      },
+      "duration": {
+        "es": "17:00 hs",
+        "en": "17:00"
+      },
+      "price": 0,
+      "currency": "ARS"
+    },
+    {
+      "id": "coctel",
+      "title": {
+        "es": "Cóctel de bienvenida",
+        "en": "Welcome cocktail"
+      },
+      "description": {
+        "es": "Brindis, música en vivo y los primeros abrazos.",
+        "en": "Toasts, live music and the first hugs."
+      },
+      "duration": {
+        "es": "18:00 hs",
+        "en": "18:00"
+      },
+      "price": 0,
+      "currency": "ARS"
+    },
+    {
+      "id": "cena",
+      "title": {
+        "es": "Cena",
+        "en": "Dinner"
+      },
+      "description": {
+        "es": "Una mesa larga para compartir en familia.",
+        "en": "One long table to share as a family."
+      },
+      "duration": {
+        "es": "20:30 hs",
+        "en": "20:30"
+      },
+      "price": 0,
+      "currency": "ARS"
+    },
+    {
+      "id": "fiesta",
+      "title": {
+        "es": "Fiesta",
+        "en": "Party"
+      },
+      "description": {
+        "es": "Baile hasta que cierre la pista.",
+        "en": "Dancing until the floor closes."
+      },
+      "duration": {
+        "es": "22:30 hs",
+        "en": "22:30"
+      },
+      "price": 0,
+      "currency": "ARS"
+    }
+  ],
+  "serviceDisplay": {
+    "price": false,
+    "duration": true
+  },
+  "actions": {
+    "basic": {
+      "primary": {
+        "type": "section",
+        "target": "#visit-card",
+        "label": {
+          "es": "VER DETALLES",
+          "en": "SEE DETAILS"
+        }
+      },
+      "manifesto": {
+        "type": "section",
+        "target": "#visit-card",
+        "label": {
+          "es": "VER DETALLES",
+          "en": "SEE DETAILS"
+        }
+      },
+      "visit": {
+        "type": "section",
+        "target": "#visit-card",
+        "label": {
+          "es": "VER DETALLES",
+          "en": "SEE DETAILS"
+        }
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "heroEyebrow": "WE'RE GETTING MARRIED",
+      "heroLine1": "LUCÍA",
+      "heroLine2": "& TOMÁS.",
+      "heroLine3": "March 13, 2027",
+      "heroDescription": "We want to share with you the day our life as a family begins.",
+      "heroBooking": "RSVP",
+      "heroBasic": "SEE DETAILS",
+      "heroBottomLeft": "13 · 03 · 2027",
+      "introEyebrow": "OUR STORY",
+      "introTitleFirst": "TWO",
+      "introTitleSecond": "PATHS,",
+      "introTitleEm": "ONE HOME.",
+      "introLead": "We met without looking for each other, and we've chosen to walk together ever since.",
+      "introBody": "We want this day filled with the people who brought us here. Thank you for being part of our story.",
+      "discoverStyle": "SEE OUR ALBUM",
+      "value1": "LOVE",
+      "value2": "FAMILY",
+      "value3": "PARTY",
+      "servicesEyebrow": "SCHEDULE",
+      "servicesTitleFirst": "THE DAY",
+      "servicesTitleEm": "STEP BY STEP.",
+      "servicesCaption": "A day to enjoy without rushing.",
+      "samplePrices": "Sample invitation: names, date, venue and times are examples.",
+      "galleryEyebrow": "ALBUM",
+      "galleryTitleFirst": "OUR",
+      "galleryTitleEm": "MOMENTS.",
+      "galleryNote": "A preview of what we'll live together.",
+      "manifestoEyebrow": "WE'LL BE WAITING",
+      "manifestoTitleFirst": "CELEBRATE",
+      "manifestoTitleEm": "WITH US.",
+      "manifestoBasic": "SEE DETAILS",
+      "manifestoBooking": "RSVP",
+      "visitEyebrow": "THE CELEBRATION",
+      "visitTitleFirst": "A DAY",
+      "visitTitleEm": "TO",
+      "visitTitleLast": "REMEMBER.",
+      "visitDescription": "Everything you need to arrive without worries.",
+      "visitBasic": "SEE DETAILS",
+      "visitBooking": "RSVP",
+      "visitCardBottom": "WE'LL SEE YOU THERE",
+      "heroImageAlt": "Floral arch with interlocking rings",
+      "footerDisclaimer": "SAMPLE INVITATION",
+      "establishedLabel": "OUR DAY",
+      "bookNow": "RSVP",
+      "navAbout": "Our story",
+      "navServices": "Schedule",
+      "navGallery": "Album",
+      "navVisit": "Venue & date",
+      "locationLabel": "VENUE",
+      "hoursLabel": "THE BIG DAY"
+    },
+    "es": {
+      "heroEyebrow": "NOS CASAMOS",
+      "heroLine1": "LUCÍA",
+      "heroLine2": "& TOMÁS.",
+      "heroLine3": "13 de marzo de 2027",
+      "heroDescription": "Queremos compartir con vos el día en que empezamos nuestra vida en familia.",
+      "heroBooking": "CONFIRMAR ASISTENCIA",
+      "heroBasic": "VER DETALLES",
+      "heroBottomLeft": "13 · 03 · 2027",
+      "introEyebrow": "NUESTRA HISTORIA",
+      "introTitleFirst": "DOS",
+      "introTitleSecond": "CAMINOS,",
+      "introTitleEm": "UN HOGAR.",
+      "introLead": "Nos encontramos sin buscarnos y desde entonces elegimos caminar juntos.",
+      "introBody": "Queremos que este día esté lleno de las personas que nos acompañaron hasta acá. Gracias por ser parte de nuestra historia.",
+      "discoverStyle": "VER NUESTRO ÁLBUM",
+      "value1": "AMOR",
+      "value2": "FAMILIA",
+      "value3": "FIESTA",
+      "servicesEyebrow": "PROGRAMA",
+      "servicesTitleFirst": "EL DÍA",
+      "servicesTitleEm": "PASO A PASO.",
+      "servicesCaption": "Un día para disfrutar sin apuros.",
+      "samplePrices": "Invitación de ejemplo: nombres, fecha, lugar y horarios son de muestra.",
+      "galleryEyebrow": "ÁLBUM",
+      "galleryTitleFirst": "NUESTROS",
+      "galleryTitleEm": "MOMENTOS.",
+      "galleryNote": "Un adelanto de lo que vamos a vivir juntos.",
+      "manifestoEyebrow": "TE ESPERAMOS",
+      "manifestoTitleFirst": "CELEBRÁ",
+      "manifestoTitleEm": "CON NOSOTROS.",
+      "manifestoBasic": "VER DETALLES",
+      "manifestoBooking": "CONFIRMAR ASISTENCIA",
+      "visitEyebrow": "LA CELEBRACIÓN",
+      "visitTitleFirst": "SERÁ UN",
+      "visitTitleEm": "DÍA PARA",
+      "visitTitleLast": "RECORDAR.",
+      "visitDescription": "Todos los datos para que llegues sin preocupaciones.",
+      "visitBasic": "VER DETALLES",
+      "visitBooking": "CONFIRMAR ASISTENCIA",
+      "visitCardBottom": "TE ESPERAMOS",
+      "heroImageAlt": "Arco floral con anillos entrelazados",
+      "footerDisclaimer": "INVITACIÓN DE EJEMPLO",
+      "establishedLabel": "NUESTRO DÍA",
+      "bookNow": "CONFIRMAR ASISTENCIA",
+      "navAbout": "Nuestra historia",
+      "navServices": "Programa",
+      "navGallery": "Álbum",
+      "navVisit": "Lugar y fecha",
+      "locationLabel": "LUGAR",
+      "hoursLabel": "EL GRAN DÍA"
+    }
+  },
+  "mode": "basic",
+  "design": "base"
+}
