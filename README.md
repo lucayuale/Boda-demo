@@ -1,105 +1,95 @@
-# VYB — Base reutilizable · Proyecto autónomo
+# Casa Aurelia — Weddings & Events · Demo VYB
 
-Este proyecto contiene su propio código fuente, generador Node.js, componentes y recursos. No importa archivos de la base ni de otros proyectos VYB. Puede copiarse, mantenerse, generarse y publicarse en un repositorio separado. La versión v6 original se conserva sin modificaciones.
+Corrección del repositorio `lucayuale/Boda-demo`. Página estática bilingüe de bodas y eventos, con marca y servicios ficticios. Reemplaza la presentación anterior y utiliza exclusivamente recursos de celebraciones. No se modificó la web oficial de VYB ni otro repositorio.
 
-## Requisitos
+## Ejecutar en Windows con PowerShell
 
-Node.js 20 o superior; Python 3 con lanzador `py` para el servidor local en Windows. No requiere `npm install` ni dependencias de producción. Internet para Google Fonts, Setmore y las fotografías históricas remotas de Obsidian cuando corresponda.
-
-## Extracción en Windows PowerShell
-
-Guardá `VYB_BASE_REUTILIZABLE_v1.zip` en Descargas:
+Guardar el ZIP en Descargas y extraerlo por completo:
 
 ```powershell
-$destinoVyb = Join-Path $HOME ('Downloads\VYB_' + (Get-Date -Format 'yyyyMMdd_HHmmss'))
-Expand-Archive -LiteralPath "$HOME\Downloads\VYB_BASE_REUTILIZABLE_v1.zip" -DestinationPath $destinoVyb
-Set-Location (Join-Path $destinoVyb 'VYB_BASE_REUTILIZABLE')
-node --version
-py --version
+Expand-Archive -LiteralPath "$HOME\Downloads\VYB_BODA_DEMO_LISTO_PARA_GITHUB.zip" -DestinationPath "$HOME\Downloads\VYB_BODA_DEMO"
+Set-Location "$HOME\Downloads\VYB_BODA_DEMO"
+py -m http.server 8097 --bind 127.0.0.1
 ```
 
-## Crear un proyecto nuevo independiente
+Abrir http://127.0.0.1:8097/ . Dejar PowerShell abierto; Ctrl+C detiene el servidor. Requiere Python. Si ese puerto está ocupado, elegir otro y cambiarlo también en el navegador. No abrir la página desde el interior del ZIP.
 
-La base incluye un diseño de referencia neutro, con Basic y Booking, sin clientes ni fotografías de demostración. Su composición proviene del contrato original Obsidian, con configuración neutra; no es una nueva propuesta visual comercial.
+No necesita `npm install`, framework, backend ni compilación. Publicar los archivos de la raíz tal como se entregan.
 
-Desde la carpeta de esta base:
+## Contenido y configuración
+
+- `index.html`: estructura semántica y contenido inicial inglés.
+- `styles.css`: identidad editorial marfil, salvia y dorado; responsive y reduced motion.
+- `app.js`: idiomas, navegación, galería, validación y envío opcional.
+- `config.js`: marca, colores, servicios, imágenes, textos, contactos y configuración del formulario.
+- `assets/`: cuatro imágenes WebP locales y favicon SVG.
+- `tests/verify.mjs`: verificaciones técnicas reproducibles, sin envíos reales.
+- `CREDITOS.md`: procedencia y licencia de las fotografías.
+- `CAMBIOS_Y_PRUEBAS.md`: cambios, eliminaciones y alcance de las pruebas.
+- `.nojekyll`: publicación estática directa en GitHub Pages.
+
+Para adaptar a un cliente editar `config.js`:
+
+- `business.name`, `business.tagline`: nombre y subtítulo ES/EN.
+- `business.logo`: ruta local opcional, por ejemplo `assets/logo.webp`. Si está vacío se utiliza el monograma tipográfico.
+- `brand.colors`: colores hexadecimales de la identidad; comprobar contraste después de cambiarlos.
+- `images`: rutas locales, textos alternativos y epígrafes ES/EN. Guardar los archivos en assets.
+- `services`: tres tipos de celebración, descripción, ID y foto. Los servicios generan también las opciones del formulario; no es necesario editar ambas partes.
+- `experiences`: títulos y descripciones ES/EN.
+- `contact.email`, `contact.address`, `contact.instagram`: datos reales cuando existan. Los valores vacíos se ocultan. No hay teléfonos ni perfiles ficticios.
+- `contact.form`: proveedor/ID público y activación descrita más abajo.
+- `seo`: título, descripción y canonical. Si cambia el nombre o dominio para otro cliente, actualizar también los metadatos iniciales de index.html antes de publicar; los navegadores usan la configuración dinámica, pero los rastreadores sociales suelen leer únicamente HTML inicial.
+- `language.storageKey`: usar una clave distinta en un cliente nuevo para aislar preferencias.
+
+La primera visita abre en inglés. El selector cambia a español sin recargar y guarda la preferencia; no se usa ubicación ni idioma automático del navegador. Se traduce todo el contenido generado, errores, epígrafes y controles. Los controles nativos de fecha/número pueden usar la apariencia y el formato del sistema del visitante.
+
+La galería amplía imágenes, permite anterior/siguiente, flechas del teclado, cierre con Escape y recuperación de foco. El menú móvil tiene estado accesible y cierre con Escape.
+
+## Formulario: estado real
+
+**El envío está desactivado en esta demostración.** No se conectó a cuentas de otras demos ni a una agenda. El botón “Check my enquiry / Revisar mi consulta” valida campos y aclara que no se ha enviado nada ni reservado una fecha. No hay confirmaciones simuladas.
+
+Validaciones: nombre de 2–100 caracteres, correo, fecha real de hoy en adelante, tipo de celebración, invitados enteros de 1 a 5000 y mensaje opcional de hasta 2000 caracteres. El límite de invitados es una validación orientativa de formulario, no capacidad del espacio. Una consulta nunca confirma disponibilidad.
+
+### Activar Formspree para un negocio real
+
+1. Crear una cuenta y un formulario propios del negocio en Formspree.
+2. Configurar y confirmar allí el correo destinatario real. Revisar cuotas, antispam, dominios y requisitos del proveedor.
+3. Copiar únicamente el identificador público del formulario; nunca contraseñas, claves privadas o tokens administrativos.
+4. En `config.js`, completar `contact.form.formId`, conservar `provider: "formspree"` y poner `enabled: true`, `recipientConfirmed: true` solo después de verificar la cuenta.
+5. Si se desea correo directo, completar `contact.email`. Ese correo visible no reemplaza la configuración de destinatario en Formspree.
+6. Publicar y realizar una consulta controlada. Confirmar recepción, spam y errores desde el dominio final.
+
+El endpoint se construye como `https://formspree.io/f/<ID>`; no se permite una URL arbitraria. Se incluye honeypot, control de doble envío, espera máxima de 15 segundos, mensajes de error, HTTP 429 y desconexión. Los campos permanecen en pantalla ante fallos. La aceptación del proveedor no garantiza entrega en la bandeja ni disponibilidad de la fecha.
+
+Si Formspree exige CAPTCHA, integrar y probar su flujo oficial antes de activar; esta entrega no agrega ni desactiva un CAPTCHA. La protección del navegador no sustituye la del proveedor. Revisar sus condiciones vigentes: no se promete un servicio gratuito ilimitado.
+
+No hay base de datos propia ni datos personales guardados en localStorage. El proveedor externo puede procesar y conservar consultas conforme a su privacidad. El formulario informa esto y enlaza su política. No se efectuaron envíos reales en las pruebas.
+
+## Actualizar Boda-demo desde GitHub
+
+1. Descargar y extraer este ZIP; **no subir el ZIP comprimido**.
+2. Abrir el repositorio `lucayuale/Boda-demo`, confirmar la rama que publica GitHub Pages y hacer un respaldo/commit previo.
+3. Reemplazar en la raíz: `index.html`, `styles.css`, `app.js`, `config.js`, `README.md`.
+4. Eliminar los cinco archivos antiguos de `assets/` listados en CAMBIOS_Y_PRUEBAS.md. Subir los cuatro WebP y favicon nuevos conservando la carpeta assets.
+5. Agregar `.nojekyll`, `CREDITOS.md`, `CAMBIOS_Y_PRUEBAS.md` y `tests/verify.mjs`. No borrar archivos de hosting o workflows ajenos a esta entrega sin revisarlos.
+6. En GitHub se puede usar Add file → Upload files y arrastrar los archivos y carpetas extraídos; confirmar los cambios. Para cada imagen antigua: abrir el archivo, usar Delete file y confirmar. Subir archivos nuevos por sí solo **no elimina** los anteriores.
+7. Settings → Pages: mantener la rama publicada correcta y carpeta `/ (root)`. Si todavía no estuviera configurado, seleccionar Deploy from a branch → main → `/ (root)` → Save, siempre que main sea la rama elegida.
+8. Esperar al despliegue y abrir `https://lucayuale.github.io/Boda-demo/`. Hacer Ctrl+F5 y revisar la ejecución de Pages si se sigue viendo la versión antigua.
+
+No crear un nivel adicional `Boda-demo-main/` o `final/` dentro del repositorio. `index.html` debe quedar directamente en su raíz. CSS, JS y fotografías utilizan rutas relativas; se comprobó la previsualización bajo `/Boda-demo/`.
+
+La URL pública no se modificó durante esta entrega. El nuevo contenido aparecerá cuando el propietario reemplace los archivos y GitHub Pages complete el despliegue. No se tocó el catálogo de la web oficial: cualquier aviso de revisión previo debe retirarse allí después de publicar y verificar esta demo.
+
+## Pruebas reproducibles
+
+Con Node.js 20 o posterior, sin instalar paquetes:
 
 ```powershell
-node .\tools\new-project.mjs --out ..\VYB_MI_NEGOCIO --client mi-negocio --name "Mi negocio"
-Set-Location ..\VYB_MI_NEGOCIO
-node .\tools\build.mjs --client mi-negocio --mode booking
-py -m http.server 8092 --bind 127.0.0.1 --directory .\dist\mi-negocio\booking
+Set-Location "$HOME\Downloads\VYB_BODA_DEMO"
+node .\tests\verify.mjs
+node --check .\app.js
+node --check .\config.js
 ```
 
-La carpeta destino debe ser nueva y estar fuera de la base. La herramienta copia código fuente, generador, componentes, documentación y pruebas; crea únicamente una configuración neutra, sin copiar clientes ni `dist`. La carpeta resultante no necesita la base para seguir funcionando. No hay sincronización automática: cada proyecto administra sus propias correcciones y versiones.
-
-Para crear un diseño futuro, trabajá sobre el proyecto recién creado: adaptá `src/index.html`, `src/styles.css` y los textos neutros. Conservá los IDs y componentes que utiliza `src/app.js`; agregá validaciones/pruebas locales si el modelo de contenido cambia. No registres otros diseños dentro de esta base.
-
-## Organización y archivos publicables
-
-- `src/`: runtime y componentes locales. También contiene HTML y CSS de este diseño.
-- `tools/`: generador y alta de clientes, propios de este proyecto.
-- `config/designs.json`: registra solamente este diseño.
-- `config/` : defaults, configuración inicial neutra y recursos de inicio.
-- `clients/<id>/client.json`: datos públicos de cada negocio; `assets/` contiene sus imágenes.
-- `dist/<id>/<modo>/`: resultado generado. Esta carpeta contiene **todo lo publicable** del cliente elegido.
-- `tests/`: pruebas locales; `docs/`: instrucciones y reporte de validación.
-
-No edites `dist` como solución permanente: se regenera. Para personalizar clientes, editá su JSON y sus recursos. Los archivos de `src`, `tools` y defaults solo se modifican al desarrollar la plantilla, con pruebas posteriores.
-
-## Crear otro cliente de este mismo diseño
-
-```powershell
-node .\tools\new-client.mjs --client mi-cliente --name "Mi cliente" --mode booking
-node .\tools\build.mjs --client mi-cliente
-```
-
-Los clientes nuevos usan `assets/placeholder.svg`, contactos vacíos y `booking.url` vacía. Completá nombre, logo, paleta, traducciones EN/ES, imágenes, precios, moneda, horarios, dirección, teléfono, WhatsApp, correo, redes y SEO desde `clients/mi-cliente/client.json`.
-
-Para un repositorio por negocio, copiá el proyecto completo a una carpeta nueva y conservá solo la configuración y `dist` del negocio correspondiente. Todos los archivos fuente necesarios ya son locales. La herramienta `new-project.mjs` de la base automatiza el inicio de un proyecto neutro; no importa diseños de otros proyectos.
-
-## Setmore
-
-Configuración en `clients/<id>/client.json`:
-
-```json
-"booking": {
-  "mode": "modal",
-  "url": ""
-}
-```
-
-Cada negocio debe crear su cuenta en https://www.setmore.com/, configurar servicios/citas, personal, disponibilidad y notificaciones, y copiar su Booking Page HTTPS desde su cuenta. Pegá esa URL en el JSON y regenerá. `modal` admite subdominios oficiales `*.setmore.com` por HTTPS sin credenciales ni puerto alternativo; `external` permite un enlace HTTPS a otra plataforma y abre otra pestaña segura.
-
-Sin URL, el botón informa que no está configurado y no carga un calendario. El modal conserva Escape, cierre por botón/fondo, foco y enlace alternativo. Setmore gestiona las reservas; VYB no almacena datos de turnos. No incluyas contraseñas, tokens o claves privadas en el JSON.
-
-La incrustación por iframe es un mecanismo oficial y gratuito documentado por Setmore. Conservamos su marca. Algunas funciones avanzadas y la eliminación de marca requieren planes pagos; revisá los límites vigentes de la cuenta antes de ofrecerlas. Fuentes: https://www.setmore.com/features/website-widgets y https://support.setmore.com/en/articles/490991-embed-your-booking-page-on-your-website .
-
-La base no incluye ninguna cuenta de reservas configurada.
-
-## Pruebas
-
-```powershell
-node .\tests\verify-independent.mjs
-```
-
-Las pruebas copian el código a una ruta temporal con espacios, fuera del proyecto y sin hermanos/base presentes. Generan páginas, comprueban recursos, idiomas, clientes neutros, aislamiento, URL y protección de salidas. No crean turnos reales ni requieren conexión con Setmore.
-
-Los tests de catálogo multidiseño de v6 ya no describen esta arquitectura y se reemplazaron por la suite autónoma. Las referencias hash de los diseños aprobados se conservaron por proyecto. Consultá `docs/VALIDACION.md` para resultados y pruebas pendientes.
-
-## Preparar GitHub y publicar
-
-No se creó ni publicó ningún repositorio. Abrí una terminal en **esta** carpeta (no en la carpeta que reúne los ZIP):
-
-```powershell
-git init
-git add .
-git commit -m "Initial autonomous VYB project"
-git branch -M main
-```
-
-Creá un repositorio vacío para este proyecto en GitHub y copiá de GitHub su comando `git remote add origin ...`. Luego ejecutá `git push -u origin main`. Revisá los archivos incluidos antes de subir: solo datos públicos, sin `.env` ni credenciales. Los nombres sugeridos son `vyb-obsidian`, `vyb-cosmetica`, `vyb-gym` y `vyb-restaurante`.
-
-En un hosting estático, no hace falta un backend ni instalar paquetes. Si el hosting admite build, usá el comando de generación indicado arriba y seleccioná su `dist/<cliente>/booking` como directorio publicable. Si permite subir archivos, subí **el contenido** de esa carpeta. No subas el proyecto entero como directorio web. Activá HTTPS y probá enlaces, imágenes, móvil, idiomas, modal y su alternativa externa en el dominio final.
-
-Antes de publicar: completar datos reales, revisar fotografías y permisos, configurar SEO/dominio, verificar la cuenta Setmore propia y efectuar una reserva controlada con autorización del negocio. No se publican automáticamente sitios ni repositorios.
+Los casos configurados usan respuestas simuladas; nunca envían mensajes a una cuenta real. Ver los resultados y pendientes en CAMBIOS_Y_PRUEBAS.md.

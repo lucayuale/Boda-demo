@@ -1,511 +1,362 @@
 window.VYB_CONFIG = {
   "business": {
-    "name": "Tu Taller",
-    "tagline": "MECÁNICA INTEGRAL",
-    "demoLabel": "DATOS PROVISORIOS — Completar antes de publicar",
-    "copyrightYear": "",
-    "established": ""
-  },
-  "seo": {
-    "title": "Tu Taller | Taller mecánico con turnos online",
-    "description": "Taller mecánico: service, frenos, suspensión y diagnóstico. Sacá tu turno online. Texto provisorio: completar con la descripción real.",
-    "canonicalUrl": "",
-    "businessType": "LocalBusiness",
-    "includeStructuredData": false
+    "name": "Casa Aurelia",
+    "tagline": {
+      "es": "Bodas & Eventos",
+      "en": "Weddings & Events"
+    },
+    "logo": ""
   },
   "language": {
-    "default": "es",
+    "default": "en",
     "available": [
-      "es",
-      "en"
+      "en",
+      "es"
     ],
-    "numberLocale": "es-AR"
+    "storageKey": "vyb-casa-aurelia-language"
   },
   "brand": {
-    "logoImage": "",
-    "favicon": "",
     "colors": {
-      "primary": "#f0b232",
-      "accentLight": "#f6cd6b",
-      "secondary": "#1a2c39",
-      "backgroundDark": "#0e1a23",
-      "backgroundLight": "#edefec",
-      "backgroundSoft": "#dfe3e0",
-      "muted": "#8fa0ab",
-      "white": "#fafbf9",
-      "button": "#f0b232",
-      "buttonText": "#10202b",
-      "servicesBackground": "#132531",
-      "heroBackground": "#0e1a23",
-      "manifestoBackground": "#0f1d27",
-      "footerBackground": "#0a141b",
-      "textOnDark": "#eef2f2",
-      "textMutedOnDark": "#a7b5bd",
-      "textMutedOnLight": "#52616b",
-      "cardBackground": "#dde3e1",
-      "cardBorder": "#c3ccc9",
-      "text": "#13202a"
+      "ivory": "#f8f5ee",
+      "ink": "#343b33",
+      "sage": "#59644f",
+      "gold": "#7d633d",
+      "soft": "#eeeadf"
     }
   },
-  "images": {
-    "hero": "assets/hero.jpg",
-    "heroAlt": {
-      "es": "Mecánico trabajando en el motor de un auto en el taller",
-      "en": "Mechanic working on a car engine in the workshop"
+  "seo": {
+    "canonicalUrl": "https://lucayuale.github.io/Boda-demo/",
+    "title": {
+      "es": "Casa Aurelia — Bodas & Eventos | Demo VYB",
+      "en": "Casa Aurelia — Weddings & Events | VYB Demo"
     },
-    "manifesto": "assets/manifesto.jpg",
-    "gallery": [
-      {
-        "src": "assets/trabajo-1.jpg",
-        "large": "assets/trabajo-1.jpg",
-        "alt": {
-          "es": "Mecánico trabajando en un auto",
-          "en": "Mechanic working on a car"
-        },
-        "caption": {
-          "es": "Trabajo en el taller",
-          "en": "Work in the workshop"
-        }
-      },
-      {
-        "src": "assets/trabajo-2.jpg",
-        "large": "assets/trabajo-2.jpg",
-        "alt": {
-          "es": "Herramientas del taller",
-          "en": "Workshop tools"
-        },
-        "caption": {
-          "es": "Herramientas",
-          "en": "Tools"
-        }
-      },
-      {
-        "src": "assets/trabajo-3.jpg",
-        "large": "assets/trabajo-3.jpg",
-        "alt": {
-          "es": "Revisión de un vehículo",
-          "en": "Vehicle inspection"
-        },
-        "caption": {
-          "es": "Revisión",
-          "en": "Inspection"
-        }
-      }
-    ]
+    "description": {
+      "es": "Una demostración ficticia de bodas y eventos: celebraciones personales, inspiración floral y consulta de disponibilidad. Diseño por VYB.",
+      "en": "A fictional wedding and events concept: personal celebrations, floral inspiration and an availability enquiry. A website design demonstration by VYB."
+    }
   },
-  "businessDetails": {
+  "contact": {
+    "email": "",
     "address": {
-      "es": "Completar dirección del taller",
-      "en": "Add workshop address"
-    },
-    "addressNote": {
       "es": "",
       "en": ""
     },
-    "hoursNote": {
-      "es": "Completar días y horarios de atención reales",
-      "en": "Add actual opening days and hours"
+    "instagram": "",
+    "form": {
+      "provider": "formspree",
+      "enabled": false,
+      "formId": "",
+      "recipientConfirmed": false
+    }
+  },
+  "images": {
+    "reception": {
+      "src": "assets/reception.webp",
+      "alt": {
+        "es": "Mesa de recepción de boda con flores y velas",
+        "en": "Wedding reception table with flowers and candles"
+      },
+      "caption": {
+        "es": "Una mesa para compartir",
+        "en": "A table to come together"
+      }
     },
-    "hours": []
-  },
-  "contact": {
-    "phone": "",
-    "email": "",
-    "whatsapp": "",
-    "socials": []
-  },
-  "booking": {
-    "url": "https://carshop.setmore.com/",
-    "mode": "modal"
+    "ceremony": {
+      "src": "assets/ceremony.webp",
+      "alt": {
+        "es": "Arco de ceremonia al aire libre con flores y vegetación",
+        "en": "Outdoor ceremony arch with flowers and greenery"
+      },
+      "caption": {
+        "es": "El escenario de un sí",
+        "en": "The setting for “I do”"
+      }
+    },
+    "flowers": {
+      "src": "assets/flowers.webp",
+      "alt": {
+        "es": "Detalle de un ramo nupcial de flores blancas",
+        "en": "A close-up of a white bridal bouquet"
+      },
+      "caption": {
+        "es": "La delicadeza de lo pequeño",
+        "en": "Beauty in the little things"
+      }
+    },
+    "celebration": {
+      "src": "assets/celebration.webp",
+      "alt": {
+        "es": "Mesa preparada para una celebración con copas y flores",
+        "en": "A table set for a celebration with glassware and flowers"
+      },
+      "caption": {
+        "es": "El placer de celebrar",
+        "en": "The joy of celebration"
+      }
+    }
   },
   "services": [
     {
-      "id": "service",
+      "id": "wedding",
       "title": {
-        "es": "Service y mantenimiento",
-        "en": "Service and maintenance"
+        "es": "Bodas",
+        "en": "Weddings"
       },
       "description": {
-        "es": "Aceite, filtros y revisión de niveles según el plan del fabricante.",
-        "en": "Oil, filters and fluid checks following the manufacturer's plan."
+        "es": "Del primer encuentro al último brindis. Ceremonia y recepción con una misma sensibilidad.",
+        "en": "From the first look to the last toast. A ceremony and reception with a shared sense of intention."
       },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
+      "image": "ceremony"
     },
     {
-      "id": "frenos",
+      "id": "private",
       "title": {
-        "es": "Frenos",
-        "en": "Brakes"
+        "es": "Celebraciones privadas",
+        "en": "Private celebrations"
       },
       "description": {
-        "es": "Pastillas, discos, líquido y control del sistema completo.",
-        "en": "Pads, discs, fluid and a full system check."
+        "es": "Aniversarios y encuentros íntimos, con el espacio y el ambiente que cada historia merece.",
+        "en": "Anniversaries and intimate gatherings, with a setting and atmosphere that feel personal."
       },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
+      "image": "celebration"
     },
     {
-      "id": "suspension",
+      "id": "special",
       "title": {
-        "es": "Suspensión y dirección",
-        "en": "Suspension and steering"
+        "es": "Eventos especiales",
+        "en": "Special occasions"
       },
       "description": {
-        "es": "Amortiguadores, tren delantero, alineación y balanceo.",
-        "en": "Shocks, front end, alignment and balancing."
+        "es": "Un concepto visual cuidado para esos momentos que piden algo diferente.",
+        "en": "A considered visual concept for the moments that call for something a little different."
       },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
-    },
-    {
-      "id": "diagnostico",
-      "title": {
-        "es": "Diagnóstico con scanner",
-        "en": "Scanner diagnostics"
-      },
-      "description": {
-        "es": "Lectura de fallas y testigos encendidos en el tablero.",
-        "en": "Fault code reading and dashboard warning lights."
-      },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
-    },
-    {
-      "id": "electrico",
-      "title": {
-        "es": "Sistema eléctrico y batería",
-        "en": "Electrical system and battery"
-      },
-      "description": {
-        "es": "Batería, alternador, arranque e iluminación.",
-        "en": "Battery, alternator, starter and lighting."
-      },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
-    },
-    {
-      "id": "pre-vtv",
-      "title": {
-        "es": "Revisión previa a la VTV",
-        "en": "Pre-inspection check"
-      },
-      "description": {
-        "es": "Control de los puntos que se evalúan en la verificación técnica.",
-        "en": "Check of the points assessed in the vehicle inspection."
-      },
-      "duration": {
-        "es": "",
-        "en": ""
-      },
-      "price": 0,
-      "currency": "ARS"
+      "image": "flowers"
     }
   ],
-  "serviceDisplay": {
-    "price": false,
-    "duration": false
-  },
-  "actions": {
-    "basic": {}
-  },
-  "translations": {
-    "en": {
-      "skip": "Skip to content",
-      "navLabel": "Primary navigation",
-      "navAbout": "The workshop",
-      "navServices": "Services",
-      "navGallery": "Our work",
-      "navVisit": "Find us",
-      "bookNow": "BOOK A SLOT",
-      "exploreServices": "EXPLORE SERVICES",
-      "scrollToExplore": "SCROLL TO EXPLORE",
-      "locationLabel": "LOCATION",
-      "locationNoteLabel": "DETAILS",
-      "hoursLabel": "OPENING HOURS",
-      "hoursNoteLabel": "NOTE",
-      "contactLabel": "CONTACT",
-      "phoneLabel": "CALL",
-      "emailLabel": "EMAIL",
-      "whatsappLabel": "WHATSAPP",
-      "backTop": "BACK TO TOP ↑",
-      "bookingNotConfigured": "Online booking is not configured yet. Contact the workshop to arrange a slot.",
-      "bookingInvalidUrl": "The booking link is invalid. Configure a secure HTTPS link.",
-      "bookingModalEyebrow": "ONLINE BOOKING",
-      "bookingModalTitle": "Book your slot",
-      "bookingModalHelp": "Choose the service, day and time in the Setmore window. Setmore handles the booking details.",
-      "bookingOpenExternal": "If the calendar does not load, open Setmore in a new tab",
-      "bookingModalClose": "Close booking window",
-      "galleryClose": "Close image",
-      "gallerySelected": "Selected gallery image",
-      "switchLanguage": "Switch language to {language}",
-      "languageName_es": "Spanish",
-      "languageName_en": "English",
-      "openMenu": "Open menu",
-      "closeMenu": "Close menu",
-      "establishedLabel": "EST.",
-      "heroEyebrow": "AUTO REPAIR · ONLINE BOOKING",
-      "heroLine1": "YOUR CAR,",
-      "heroLine2": "IN GOOD",
-      "heroLine3": "hands.",
-      "heroDescription": "Maintenance and repair for your vehicle, with online booking. Placeholder text: replace it with the workshop's real offer.",
-      "heroBooking": "BOOK A SLOT",
-      "heroBasic": "GET IN TOUCH",
-      "heroBottomLeft": "MAINTENANCE · REPAIR · DIAGNOSTICS",
-      "introEyebrow": "THE WORKSHOP",
-      "introTitleFirst": "CLEAR",
-      "introTitleSecond": "WORK,",
-      "introTitleEm": "NO SURPRISES.",
-      "introLead": "Introduce the workshop and its team here: how long they have worked and with which vehicles.",
-      "introBody": "Placeholder text. Explain how the workshop works: how it diagnoses, how it informs customers before repairing and what warranty it offers. Replace with real information before publishing.",
-      "discoverStyle": "SEE OUR WORK",
-      "value1": "CLEAR DIAGNOSIS",
-      "value2": "YOUR CHOICE OF PARTS",
-      "value3": "ONLINE BOOKING",
-      "servicesEyebrow": "WHAT WE DO",
-      "servicesTitleFirst": "OUR",
-      "servicesTitleEm": "SERVICES.",
-      "servicesCaption": "Pick a service and book your slot. Placeholder list.",
-      "samplePrices": "Sample services and text, no prices. Add the workshop's real information before publishing.",
-      "galleryEyebrow": "OUR WORK",
-      "galleryTitleFirst": "THE WORKSHOP",
-      "galleryTitleEm": "INSIDE.",
-      "galleryNote": "A look at the workshop and the work we do.",
-      "manifestoEyebrow": "ONLINE BOOKING",
-      "manifestoTitleFirst": "PICK THE DAY,",
-      "manifestoTitleEm": "WE HANDLE THE REST.",
-      "manifestoBasic": "CONTACT THE WORKSHOP",
-      "manifestoBooking": "BOOK A SLOT",
-      "visitEyebrow": "FIND US",
-      "visitTitleFirst": "BRING YOUR CAR",
-      "visitTitleEm": "WHEN",
-      "visitTitleLast": "IT SUITS YOU.",
-      "visitDescription": "Add the workshop's real address, opening hours and contact details.",
-      "visitBasic": "GET IN TOUCH",
-      "visitBooking": "BOOK A SLOT",
-      "visitCardBottom": "WE LOOK FORWARD TO SEEING YOU",
-      "heroImageAlt": "Mechanic working on a car engine in the workshop",
-      "footerDisclaimer": "UNCUSTOMIZED TEMPLATE"
+  "experiences": [
+    {
+      "title": {
+        "es": "Una atmósfera propia",
+        "en": "An atmosphere of your own"
+      },
+      "body": {
+        "es": "Paletas, flores y texturas que acompañan tu historia.",
+        "en": "Colours, florals and textures that reflect your story."
+      }
     },
+    {
+      "title": {
+        "es": "Un ritmo sin apuro",
+        "en": "An unhurried rhythm"
+      },
+      "body": {
+        "es": "Una secuencia del día para disfrutar cada encuentro.",
+        "en": "A flow to the day that leaves room to enjoy each moment."
+      }
+    },
+    {
+      "title": {
+        "es": "Detalles con intención",
+        "en": "Details with intention"
+      },
+      "body": {
+        "es": "Una propuesta de mesa y ambientación pensada en conjunto.",
+        "en": "A table and setting imagined as one thoughtful whole."
+      }
+    }
+  ],
+  "gallery": [
+    "ceremony",
+    "reception",
+    "flowers",
+    "celebration"
+  ],
+  "translations": {
     "es": {
       "skip": "Saltar al contenido",
-      "navLabel": "Navegación principal",
-      "navAbout": "El taller",
-      "navServices": "Servicios",
-      "navGallery": "Trabajos",
-      "navVisit": "Dónde estamos",
-      "bookNow": "SACAR TURNO",
-      "exploreServices": "VER SERVICIOS",
-      "scrollToExplore": "DESCUBRÍ MÁS",
-      "locationLabel": "UBICACIÓN",
-      "locationNoteLabel": "DETALLES",
-      "hoursLabel": "HORARIOS",
-      "hoursNoteLabel": "NOTA",
-      "contactLabel": "CONTACTO",
-      "phoneLabel": "LLAMAR",
-      "emailLabel": "CORREO",
-      "whatsappLabel": "WHATSAPP",
-      "backTop": "VOLVER ARRIBA ↑",
-      "bookingNotConfigured": "Los turnos online todavía no están configurados. Contactá al taller para coordinar un turno.",
-      "bookingInvalidUrl": "El enlace de turnos no es válido. Configurá un enlace seguro HTTPS.",
-      "bookingModalEyebrow": "TURNOS ONLINE",
-      "bookingModalTitle": "Sacá tu turno",
-      "bookingModalHelp": "Elegí el servicio, el día y el horario en la ventana de Setmore. Setmore gestiona los datos del turno.",
-      "bookingOpenExternal": "Si el calendario no carga, abrí Setmore en una pestaña nueva",
-      "bookingModalClose": "Cerrar ventana de reservas",
-      "galleryClose": "Cerrar imagen",
-      "gallerySelected": "Imagen de galería seleccionada",
-      "switchLanguage": "Cambiar idioma a {language}",
-      "languageName_es": "español",
-      "languageName_en": "inglés",
+      "demo": "DEMO VYB · ESPACIO Y SERVICIOS FICTICIOS",
+      "navAbout": "Nosotros",
+      "navServices": "Celebraciones",
+      "navGallery": "Galería",
+      "navExperience": "Experiencias",
+      "navContact": "Consultar",
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú",
-      "establishedLabel": "DESDE",
-      "heroEyebrow": "TALLER MECÁNICO · TURNOS ONLINE",
-      "heroLine1": "TU AUTO,",
-      "heroLine2": "EN BUENAS",
-      "heroLine3": "manos.",
-      "heroDescription": "Mantenimiento y reparación para tu vehículo, con turno online. Texto provisorio: reemplazalo por la propuesta real del taller.",
-      "heroBooking": "SACAR TURNO",
-      "heroBasic": "CONTACTANOS",
-      "heroBottomLeft": "MANTENIMIENTO · REPARACIÓN · DIAGNÓSTICO",
-      "introEyebrow": "EL TALLER",
-      "introTitleFirst": "TRABAJO",
-      "introTitleSecond": "CLARO,",
-      "introTitleEm": "SIN SORPRESAS.",
-      "introLead": "Presentá acá al taller y a su equipo: cuánto hace que trabajan y con qué vehículos.",
-      "introBody": "Texto provisorio. Contá cómo trabajan: cómo diagnostican, cómo informan al cliente antes de reparar y qué garantía ofrecen. Reemplazalo por información real antes de publicar.",
-      "discoverStyle": "VER NUESTROS TRABAJOS",
-      "value1": "DIAGNÓSTICO CLARO",
-      "value2": "REPUESTOS A ELECCIÓN",
-      "value3": "TURNOS ONLINE",
-      "servicesEyebrow": "QUÉ HACEMOS",
-      "servicesTitleFirst": "NUESTROS",
-      "servicesTitleEm": "SERVICIOS.",
-      "servicesCaption": "Elegí el servicio y reservá tu turno. Lista provisoria.",
-      "samplePrices": "Servicios y textos de ejemplo, sin precios. Completá la información real del taller antes de publicar.",
-      "galleryEyebrow": "NUESTROS TRABAJOS",
-      "galleryTitleFirst": "EL TALLER",
-      "galleryTitleEm": "POR DENTRO.",
-      "galleryNote": "Una mirada al taller y a los trabajos que hacemos.",
-      "manifestoEyebrow": "TURNOS ONLINE",
-      "manifestoTitleFirst": "ELEGÍ EL DÍA,",
-      "manifestoTitleEm": "NOSOTROS LO RESOLVEMOS.",
-      "manifestoBasic": "CONTACTAR AL TALLER",
-      "manifestoBooking": "SACAR TURNO",
-      "visitEyebrow": "DÓNDE ESTAMOS",
-      "visitTitleFirst": "TRAÉ TU AUTO",
-      "visitTitleEm": "CUANDO",
-      "visitTitleLast": "QUEDE BIEN PARA VOS.",
-      "visitDescription": "Agregá la dirección, los horarios y los medios de contacto reales del taller.",
-      "visitBasic": "CONTACTANOS",
-      "visitBooking": "SACAR TURNO",
-      "visitCardBottom": "TE ESPERAMOS",
-      "heroImageAlt": "Mecánico trabajando en el motor de un auto en el taller",
-      "footerDisclaimer": "PLANTILLA SIN PERSONALIZAR"
-    }
-  },
-  "mode": "booking",
-  "design": "base",
-  "template": {
-    "defaults": {
-      "language": "en",
-      "colors": {
-        "primary": "#c9ad7a",
-        "secondary": "#222420",
-        "backgroundDark": "#11120f",
-        "accentLight": "#e2c895",
-        "backgroundLight": "#f0ede6",
-        "backgroundSoft": "#e5e0d5",
-        "muted": "#a49c8d",
-        "white": "#fcf9f3",
-        "button": "#c9ad7a",
-        "buttonText": "#191a16",
-        "servicesBackground": "#191b18",
-        "heroBackground": "#131512",
-        "manifestoBackground": "#161714",
-        "footerBackground": "#111310",
-        "textOnDark": "#f2eee4",
-        "textMutedOnDark": "#a8a8a0",
-        "textMutedOnLight": "#66665d",
-        "cardBackground": "#e6dfd2",
-        "cardBorder": "#d3c9b7",
-        "text": "#171916"
-      }
+      "navLabel": "Navegación principal",
+      "home": "Casa Aurelia, inicio",
+      "switchLanguage": "Cambiar a inglés",
+      "heroEyebrow": "BODAS & CELEBRACIONES CON ALMA",
+      "heroFirst": "Hay días que",
+      "heroSecond": "se quedan",
+      "heroEm": "para siempre.",
+      "heroBody": "Bodas y encuentros íntimos pensados con sensibilidad. Un escenario para celebrar tu historia, a tu manera.",
+      "enquire": "Consultar por mi fecha",
+      "explore": "Descubrí Casa Aurelia",
+      "heroCaption": "La belleza está en cómo se siente.",
+      "seal": "MOMENTOS · CON SENTIDO ·",
+      "photoNote": "Fotografías de inspiración. No muestran un espacio real de Casa Aurelia.",
+      "heroBottom": "TU HISTORIA. TU RITMO. TU CELEBRACIÓN.",
+      "aboutKicker": "01 / NUESTRA ESENCIA",
+      "aboutTitle": "Lo extraordinario empieza",
+      "aboutEm": "en lo personal.",
+      "aboutLead": "Un lugar para encontrarse. Un momento para recordar.",
+      "aboutBody": "Casa Aurelia es una propuesta ficticia de VYB que imagina un espacio para bodas y eventos cuidados. Naturaleza, calidez y una mirada atenta a los pequeños detalles dan forma a esta experiencia.",
+      "aboutLink": "Encontrá tu forma de celebrar",
+      "aboutLabel": "LA CALMA ANTES DEL SÍ",
+      "servicesKicker": "02 / FORMAS DE CELEBRAR",
+      "servicesTitle": "Hay una ocasión",
+      "servicesEm": "que es solo tuya.",
+      "servicesIntro": "Desde un sí íntimo hasta una mesa compartida. Estas propuestas ilustran cómo podría presentarse tu negocio.",
+      "serviceCTA": "Contanos tu idea",
+      "galleryKicker": "03 / UN POCO DE INSPIRACIÓN",
+      "galleryTitle": "Detalles que hablan",
+      "galleryEm": "sin decir nada.",
+      "galleryIntro": "Ceremonias, flores y mesas para imaginar lo que viene. Imágenes de referencia, no eventos realizados por Casa Aurelia.",
+      "galleryOpen": "Ampliar imagen",
+      "galleryClose": "Cerrar imagen",
+      "galleryPrev": "Imagen anterior",
+      "galleryNext": "Imagen siguiente",
+      "galleryLabel": "Galería de inspiración",
+      "experienceKicker": "04 / A TU MANERA",
+      "experienceTitle": "No hay dos historias",
+      "experienceEm": "que se celebren igual.",
+      "experienceBody": "La ambientación, el ritmo del día y la forma de compartirlo. Imaginamos cada celebración desde lo que importa para vos. El alcance real se define con cada cliente.",
+      "contactKicker": "05 / EL PRÓXIMO CAPÍTULO",
+      "contactTitle": "Todo empieza",
+      "contactEm": "con una idea.",
+      "contactBody": "Contanos qué estás imaginando y una fecha aproximada. Una consulta de disponibilidad no es una reserva ni una confirmación.",
+      "contactDemo": "Esta es una demostración. No hay un espacio real ni una agenda conectada. Los datos de contacto se personalizan para cada cliente.",
+      "directEmail": "Escribinos directamente",
+      "socialLabel": "Encontranos en Instagram",
+      "formTitle": "Imaginemos tu celebración",
+      "nameLabel": "Nombre y apellido *",
+      "emailLabel": "Correo electrónico *",
+      "dateLabel": "Fecha estimada *",
+      "typeLabel": "Tipo de celebración *",
+      "typePlaceholder": "Elegí una opción",
+      "guestsLabel": "Invitados aproximados *",
+      "messageLabel": "Tu idea (opcional)",
+      "dateHelp": "Elegí hoy o una fecha futura. No confirma disponibilidad.",
+      "guestsHelp": "Cantidad orientativa, entre 1 y 5000. No expresa el aforo del espacio.",
+      "messagePlaceholder": "El estilo, los detalles, lo que te ilusiona…",
+      "pending": "Demo sin envío activo. Podés revisar los datos, pero no se enviará ninguna consulta.",
+      "ready": "Completá tus datos para consultar. La disponibilidad se confirma por separado.",
+      "check": "Revisar mi consulta",
+      "send": "Enviar consulta",
+      "sending": "Enviando…",
+      "privacy": "Al activar el envío, los datos se compartirán con el negocio mediante Formspree para responder la consulta. No usamos una base de datos propia. No incluyas información sensible.",
+      "privacyLink": "Privacidad de Formspree",
+      "required": "Completá este campo.",
+      "errorName": "Ingresá un nombre de entre 2 y 100 caracteres.",
+      "errorEmail": "Ingresá un correo electrónico válido.",
+      "errorDate": "Elegí una fecha válida de hoy en adelante.",
+      "errorType": "Elegí un tipo de celebración.",
+      "errorGuests": "Ingresá una cantidad entera entre 1 y 5000.",
+      "errorMessage": "El mensaje no puede superar los 2000 caracteres.",
+      "invalid": "Revisá los campos indicados.",
+      "validPending": "Los datos están completos. Esta demo no tiene envío configurado: no se envió ninguna consulta ni se reservó una fecha.",
+      "success": "El proveedor aceptó la consulta para envío. Esto no confirma disponibilidad ni reserva una fecha.",
+      "errorSend": "No pudimos enviar la consulta. Tus datos siguen aquí; intentá más tarde o usá el correo configurado.",
+      "errorNetwork": "No pudimos confirmar el envío por un problema de conexión. Tus datos siguen en esta página.",
+      "errorLimit": "Hay demasiadas solicitudes. Esperá unos minutos antes de reintentar.",
+      "footerLine": "Celebraciones pensadas para sentirse.",
+      "footerDemo": "Una demostración de diseño por VYB. Marca y servicios ficticios.",
+      "backTop": "Volver al inicio",
+      "allRights": "DEMO DE DISEÑO",
+      "footerNav": "Navegación del pie"
     },
-    "translations": {
-      "en": {
-        "skip": "Skip to content",
-        "navLabel": "Primary navigation",
-        "navAbout": "Our story",
-        "navServices": "Services",
-        "navGallery": "Lookbook",
-        "navVisit": "Visit us",
-        "bookNow": "BOOK AN APPOINTMENT",
-        "exploreServices": "EXPLORE SERVICES",
-        "scrollToExplore": "SCROLL TO EXPLORE",
-        "locationLabel": "LOCATION",
-        "locationNoteLabel": "DETAILS",
-        "hoursLabel": "OPENING HOURS",
-        "hoursNoteLabel": "NOTE",
-        "contactLabel": "CONTACT",
-        "phoneLabel": "CALL",
-        "emailLabel": "EMAIL",
-        "whatsappLabel": "WHATSAPP",
-        "backTop": "BACK TO TOP ↑",
-        "bookingNotConfigured": "Online booking is not configured yet. Contact the business to arrange an appointment.",
-        "bookingInvalidUrl": "The booking link is invalid. Configure a secure HTTPS link.",
-        "bookingModalEyebrow": "SECURE ONLINE BOOKING",
-        "bookingModalTitle": "Book your visit",
-        "bookingModalHelp": "Choose a service and time in the Setmore booking window. Setmore handles the appointment details.",
-        "bookingOpenExternal": "If the calendar does not load, open Setmore in a new tab",
-        "bookingModalClose": "Close booking window",
-        "galleryClose": "Close image",
-        "gallerySelected": "Selected gallery image",
-        "switchLanguage": "Switch language to {language}",
-        "languageName_es": "Spanish",
-        "languageName_en": "English",
-        "openMenu": "Open menu",
-        "closeMenu": "Close menu",
-        "establishedLabel": "EST."
-      },
-      "es": {
-        "skip": "Saltar al contenido",
-        "navLabel": "Navegación principal",
-        "navAbout": "Nuestra historia",
-        "navServices": "Servicios",
-        "navGallery": "Galería",
-        "navVisit": "Visitanos",
-        "bookNow": "RESERVAR TURNO",
-        "exploreServices": "VER SERVICIOS",
-        "scrollToExplore": "DESCUBRÍ MÁS",
-        "locationLabel": "UBICACIÓN",
-        "locationNoteLabel": "DETALLES",
-        "hoursLabel": "HORARIOS",
-        "hoursNoteLabel": "NOTA",
-        "contactLabel": "CONTACTO",
-        "phoneLabel": "LLAMAR",
-        "emailLabel": "CORREO",
-        "whatsappLabel": "WHATSAPP",
-        "backTop": "VOLVER ARRIBA ↑",
-        "bookingNotConfigured": "Los turnos online todavía no están configurados. Contactá al negocio para coordinar una visita.",
-        "bookingInvalidUrl": "El enlace de turnos no es válido. Configurá un enlace seguro HTTPS.",
-        "bookingModalEyebrow": "RESERVA ONLINE SEGURA",
-        "bookingModalTitle": "Reservá tu visita",
-        "bookingModalHelp": "Elegí un servicio y un horario en la ventana de reservas de Setmore. Setmore gestiona los datos del turno.",
-        "bookingOpenExternal": "Si el calendario no carga, abrí Setmore en una pestaña nueva",
-        "bookingModalClose": "Cerrar ventana de reservas",
-        "galleryClose": "Cerrar imagen",
-        "gallerySelected": "Imagen de galería seleccionada",
-        "switchLanguage": "Cambiar idioma a {language}",
-        "languageName_es": "español",
-        "languageName_en": "inglés",
-        "openMenu": "Abrir menú",
-        "closeMenu": "Cerrar menú",
-        "establishedLabel": "DESDE"
-      }
+    "en": {
+      "skip": "Skip to content",
+      "demo": "VYB DEMO · FICTIONAL VENUE & SERVICES",
+      "navAbout": "Our story",
+      "navServices": "Celebrations",
+      "navGallery": "Gallery",
+      "navExperience": "The experience",
+      "navContact": "Enquire",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "navLabel": "Main navigation",
+      "home": "Casa Aurelia, home",
+      "switchLanguage": "Switch to Spanish",
+      "heroEyebrow": "WEDDINGS & CELEBRATIONS WITH SOUL",
+      "heroFirst": "Some days",
+      "heroSecond": "stay with you",
+      "heroEm": "forever.",
+      "heroBody": "Thoughtfully imagined weddings and intimate gatherings. A setting for your story, a celebration that feels like you.",
+      "enquire": "Enquire about your date",
+      "explore": "Discover Casa Aurelia",
+      "heroCaption": "Beauty is in the way it feels.",
+      "seal": "MOMENTS · WITH MEANING ·",
+      "photoNote": "Inspiration photography. Not photographs of an actual Casa Aurelia venue.",
+      "heroBottom": "YOUR STORY. YOUR PACE. YOUR CELEBRATION.",
+      "aboutKicker": "01 / OUR ESSENCE",
+      "aboutTitle": "The extraordinary begins",
+      "aboutEm": "with the personal.",
+      "aboutLead": "A place to come together. A moment to remember.",
+      "aboutBody": "Casa Aurelia is a fictional concept by VYB, imagining a setting for considered weddings and events. Natural surroundings, warm hospitality and a thoughtful eye for the little things shape the experience.",
+      "aboutLink": "Find your way to celebrate",
+      "aboutLabel": "THE QUIET BEFORE “I DO”",
+      "servicesKicker": "02 / WAYS TO CELEBRATE",
+      "servicesTitle": "There is an occasion",
+      "servicesEm": "that is yours alone.",
+      "servicesIntro": "From an intimate “I do” to a shared table. These concepts illustrate how your own business could be presented.",
+      "serviceCTA": "Tell us your idea",
+      "galleryKicker": "03 / A LITTLE INSPIRATION",
+      "galleryTitle": "Details that speak",
+      "galleryEm": "without a word.",
+      "galleryIntro": "Ceremonies, flowers and tables to inspire what comes next. Reference images, not events delivered by Casa Aurelia.",
+      "galleryOpen": "Enlarge image",
+      "galleryClose": "Close image",
+      "galleryPrev": "Previous image",
+      "galleryNext": "Next image",
+      "galleryLabel": "Inspiration gallery",
+      "experienceKicker": "04 / ENTIRELY YOURS",
+      "experienceTitle": "No two stories",
+      "experienceEm": "are celebrated alike.",
+      "experienceBody": "The setting, the rhythm of the day and the way it is shared. We imagine a celebration around what matters to you. The actual scope is defined with each client.",
+      "contactKicker": "05 / THE NEXT CHAPTER",
+      "contactTitle": "It all begins",
+      "contactEm": "with an idea.",
+      "contactBody": "Tell us what you have in mind and an approximate date. An availability enquiry is not a booking or a confirmation.",
+      "contactDemo": "This is a demonstration. There is no real venue or connected calendar. Contact details are personalised for each client.",
+      "directEmail": "Email us directly",
+      "socialLabel": "Find us on Instagram",
+      "formTitle": "Let’s imagine your celebration",
+      "nameLabel": "Full name *",
+      "emailLabel": "Email address *",
+      "dateLabel": "Estimated date *",
+      "typeLabel": "Type of celebration *",
+      "typePlaceholder": "Choose an option",
+      "guestsLabel": "Approximate guest count *",
+      "messageLabel": "Your idea (optional)",
+      "dateHelp": "Choose today or a future date. This does not confirm availability.",
+      "guestsHelp": "An estimate between 1 and 5,000. This is not a statement of venue capacity.",
+      "messagePlaceholder": "The atmosphere, the little details, what you’re dreaming of…",
+      "pending": "Sending is not enabled in this demo. You can check your details, but no enquiry will be sent.",
+      "ready": "Complete your details to enquire. Availability is confirmed separately.",
+      "check": "Check my enquiry",
+      "send": "Send enquiry",
+      "sending": "Sending…",
+      "privacy": "Once sending is enabled, your details will be shared with the business through Formspree to respond to your enquiry. We do not use our own database. Please do not include sensitive information.",
+      "privacyLink": "Formspree privacy policy",
+      "required": "Please complete this field.",
+      "errorName": "Enter a name between 2 and 100 characters.",
+      "errorEmail": "Enter a valid email address.",
+      "errorDate": "Choose a valid date from today onwards.",
+      "errorType": "Choose a type of celebration.",
+      "errorGuests": "Enter a whole number between 1 and 5,000.",
+      "errorMessage": "Please keep your message within 2,000 characters.",
+      "invalid": "Please review the highlighted fields.",
+      "validPending": "Your details are complete. Sending is not configured for this demo: no enquiry was sent and no date was reserved.",
+      "success": "The provider accepted your enquiry for sending. This does not confirm availability or reserve a date.",
+      "errorSend": "We could not send your enquiry. Your details remain here; try later or use the configured email address.",
+      "errorNetwork": "We could not confirm submission because of a connection problem. Your details remain on this page.",
+      "errorLimit": "Too many requests. Please wait a few minutes before trying again.",
+      "footerLine": "Celebrations made to be felt.",
+      "footerDemo": "A design demonstration by VYB. Fictional brand and services.",
+      "backTop": "Back to the beginning",
+      "allRights": "DESIGN DEMONSTRATION",
+      "footerNav": "Footer navigation"
     }
-  },
-  "colorVariables": {
-    "primary": "--gold",
-    "secondary": "--ink-2",
-    "backgroundDark": "--black",
-    "accentLight": "--gold-light",
-    "backgroundLight": "--paper",
-    "backgroundSoft": "--paper-soft",
-    "muted": "--muted",
-    "white": "--white",
-    "text": "--ink",
-    "button": "--button",
-    "buttonText": "--button-text",
-    "servicesBackground": "--services-bg",
-    "heroBackground": "--hero-bg",
-    "manifestoBackground": "--manifesto-bg",
-    "footerBackground": "--footer-bg",
-    "textOnDark": "--text-on-dark",
-    "textMutedOnDark": "--text-muted-on-dark",
-    "textMutedOnLight": "--text-muted-on-light",
-    "cardBackground": "--card-bg",
-    "cardBorder": "--card-border"
   }
 };

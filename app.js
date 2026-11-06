@@ -1,480 +1,111 @@
 (() => {
-  'use strict';
-
-  const config = window.VYB_CONFIG;
-  if (!config) throw new Error('Falta config.js. Generá la página con tools/build.mjs.');
-
-  const mode = config.mode === 'booking' ? 'booking' : 'basic';
-  const languages = config.language.available;
-  let language = config.language.default;
-  const $ = id => document.getElementById(id);
-  const local = value => value && typeof value === 'object' ? (value[language] ?? value.en ?? '') : (value ?? '');
-  const t = key => config.translations[language]?.[key] ?? config.translations[config.language.default]?.[key] ?? key;
-
-  function validHttpsUrl(value) {
-    if (typeof value !== 'string' || !value.trim()) return '';
-    try {
-      const url = new URL(value.trim());
-      return url.protocol === 'https:' && url.hostname && !url.username && !url.password ? url.href : '';
-    } catch { return ''; }
-  }
-
-  function safeImageSource(value) {
-    if (typeof value !== 'string' || !value.trim()) return '';
-    const source = value.trim();
-    if (/[\u0000-\u001f\u007f<>"'\\]/.test(source) || source.startsWith('/') || source.startsWith('//') || source.split('/').includes('..')) return '';
-    if (/^[a-z][a-z\d+.-]*:/i.test(source)) return validHttpsUrl(source);
-    return source.startsWith('assets/') ? source : '';
-  }
-
-  const bookingMode = config.booking?.mode === 'modal' ? 'modal' : 'external';
-  const candidateBookingUrl = validHttpsUrl(config.booking?.url);
-  let bookingUrl = candidateBookingUrl;
-  if (bookingMode === 'modal' && candidateBookingUrl) {
-    const embeddedUrl = new URL(candidateBookingUrl);
-    if (embeddedUrl.port || !embeddedUrl.hostname.toLowerCase().endsWith('.setmore.com')) bookingUrl = '';
-  }
-  const bookingUrlWasProvided = Boolean(String(config.booking?.url || '').trim());
-  const serviceDisplay = config.serviceDisplay || { price: true, duration: true };
-
-  function setText(selector, value) {
-    document.querySelectorAll(selector).forEach(element => { element.textContent = value ?? ''; });
-  }
-
-  function applyBranding() {
-    const colorVariables = { ...(config.template?.defaults?.colors || {}), ...(config.brand?.colors || {}) };
-    const cssMap = config.colorVariables || {};
-    for (const [key, value] of Object.entries(colorVariables)) {
-      const variable = cssMap[key] || defaultColorVariables[key];
-      if (variable && /^#(?:[\da-f]{3}|[\da-f]{6}|[\da-f]{8})$/i.test(value)) document.documentElement.style.setProperty(variable, value);
-    }
-
-    const business = config.business;
-    setText('[data-business-name]', business.name);
-    setText('[data-business-tagline]', business.tagline || '');
-    setText('[data-business-demo]', business.demoLabel || '');
-    setText('[data-copyright-year]', business.copyrightYear || new Date().getFullYear());
-    setText('[data-business-year]', business.established || '');
-    setText('[data-business-monogram]', makeMonogram());
-    setText('[data-business-initial]', business.name.trim().charAt(0).toUpperCase());
-    $('brand-link').setAttribute('aria-label', business.name + ' home');
-    $('brand-link').title = business.name;
-    $('demo-ribbon').hidden = !business.demoLabel;
-    $('footer-demo-label').hidden = !business.demoLabel;
-    $('sample-price-note').hidden = !business.demoLabel;
-    $('established').hidden = !business.established;
-
-    const logo = safeImageSource(config.brand?.logoImage);
-    if (logo) {
-      const image = document.createElement('img');
-      image.src = logo;
-      image.alt = business.name + ' logo';
-      $('brand-icon').replaceChildren(image);
-    }
-    document.title = config.seo.title;
-    $('meta-description').content = config.seo.description;
-  }
-
-  const defaultColorVariables = {
-    primary: '--gold', secondary: '--ink-2', backgroundDark: '--black', accentLight: '--gold-light',
-    backgroundLight: '--paper', backgroundSoft: '--paper-soft', muted: '--muted', white: '--white', text: '--ink', button: '--button',
-    buttonText: '--button-text', servicesBackground: '--services-bg', heroBackground: '--hero-bg',
-    manifestoBackground: '--manifesto-bg', footerBackground: '--footer-bg', textOnDark: '--text-on-dark',
-    textMutedOnDark: '--text-muted-on-dark', textMutedOnLight: '--text-muted-on-light',
-    cardBackground: '--card-bg', cardBorder: '--card-border'
-  };
-
-  function makeMonogram() {
-    const words = config.business.name.trim().split(/\s+/).filter(Boolean);
-    return words.length > 1 ? `${words[0][0]} / ${words.at(-1)[0]}`.toUpperCase() : words[0].slice(0, 2).toUpperCase();
-  }
-
-  function applyImages() {
-    const hero = safeImageSource(config.images.hero);
-    const manifesto = safeImageSource(config.images.manifesto);
-    if (hero) $('hero-image').style.backgroundImage = `url("${hero.replaceAll('"', '%22')}")`;
-    if (manifesto) $('manifesto-image').style.backgroundImage = `url("${manifesto.replaceAll('"', '%22')}")`;
-    $('hero-image').setAttribute('aria-label', local(config.images.heroAlt));
-  }
-
-  function applyTranslations() {
-    document.documentElement.lang = language;
-    document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = t(element.dataset.i18n); });
-    const nextLanguage = languages.find(candidate => candidate !== language);
-    const languageButton = $('lang-toggle');
-    languageButton.innerHTML = nextLanguage ? `${nextLanguage.toUpperCase()} <span aria-hidden="true">↗</span>` : '';
-    languageButton.hidden = !nextLanguage;
-    languageButton.setAttribute('aria-label', nextLanguage ? t('switchLanguage').replace('{language}', t(`languageName_${nextLanguage}`)) : '');
-    $('main-nav').setAttribute('aria-label', t('navLabel'));
-    $('menu-toggle').setAttribute('aria-label', $('main-nav').classList.contains('is-open') ? t('closeMenu') : t('openMenu'));
-    $('lightbox-close').setAttribute('aria-label', t('galleryClose'));
-    $('image-lightbox').setAttribute('aria-label', t('gallerySelected'));
-    if ($('booking-modal')) {
-      $('booking-modal-close').setAttribute('aria-label', t('bookingModalClose'));
-      $('booking-frame').title = t('bookingModalTitle');
-    }
-    applyImages();
-    renderServices();
-    renderGallery();
-    renderHours();
-    renderContacts();
-    renderActions();
-    observeRevealElements();
-  }
-
-  function formatPrice(amount, currency) {
-    return new Intl.NumberFormat(config.language.numberLocale || (language === 'es' ? 'es-AR' : 'en-US'), {
-      style: 'currency', currency, maximumFractionDigits: 2
-    }).format(amount);
-  }
-
-  function makeServiceNode(service, index) {
-    const action = mode === 'booking' ? document.createElement(bookingUrl && bookingMode === 'external' ? 'a' : 'button') : document.createElement('div');
-    action.className = 'service-row reveal' + (mode === 'basic' ? ' service-row-static' : '');
-    if (bookingUrl && bookingMode === 'external') {
-      action.href = bookingUrl;
-      action.target = '_blank';
-      action.rel = 'noopener noreferrer';
-      action.setAttribute('aria-label', `${local(service.title)} — ${t('bookNow')}`);
-    } else if (mode === 'booking') {
-      action.type = 'button';
-      action.setAttribute('aria-label', `${local(service.title)} — ${t('bookNow')}`);
-      action.addEventListener('click', () => bookingUrl && bookingMode === 'modal' ? openBookingModal(action) : showBookingStatus());
-    }
-
-    const number = document.createElement('span');
-    number.className = 'service-index';
-    number.textContent = String(index + 1).padStart(2, '0');
-    const copy = document.createElement('span');
-    copy.className = 'service-copy';
-    const title = document.createElement('strong');
-    title.textContent = local(service.title);
-    copy.append(title);
-    const descriptionText = local(service.description);
-    if (descriptionText) {
-      const description = document.createElement('small');
-      description.textContent = descriptionText;
-      copy.append(description);
-    }
-    action.append(number, copy);
-    if (serviceDisplay.duration) {
-      const duration = document.createElement('span');
-      duration.className = 'service-duration';
-      duration.textContent = local(service.duration);
-      action.append(duration);
-    }
-    if (serviceDisplay.price) {
-      const price = document.createElement('span');
-      price.className = 'service-price';
-      price.textContent = formatPrice(service.price, service.currency);
-      action.append(price);
-    }
-    if (mode === 'booking') {
-      const icon = document.createElement('span');
-      icon.className = 'service-icon';
-      icon.setAttribute('aria-hidden', 'true');
-      icon.textContent = '↗';
-      action.append(icon);
-    }
-    return action;
-  }
-
-  function renderServices() {
-    const section = $('services');
-    const list = $('service-list');
-    const services = config.services || [];
-    section.hidden = services.length === 0;
-    list.dataset.showPrice = String(serviceDisplay.price);
-    list.dataset.showDuration = String(serviceDisplay.duration);
-    list.replaceChildren();
-    services.forEach((service, index) => list.append(makeServiceNode(service, index)));
-  }
-
-  function renderGallery() {
-    const section = $('gallery');
-    const grid = $('gallery-grid');
-    const gallery = config.images.gallery || [];
-    section.hidden = gallery.length === 0;
-    grid.classList.toggle('gallery-flex', gallery.length !== 3);
-    grid.replaceChildren();
-    gallery.forEach((itemData, index) => {
-      const tile = document.createElement('button');
-      tile.type = 'button';
-      tile.className = 'gallery-item reveal ' + (index === 0 && gallery.length === 3 ? 'gallery-large' : 'gallery-small') + (index === 2 && gallery.length === 3 ? ' second-small' : '');
-      tile.dataset.imageIndex = String(index);
-      const image = document.createElement('img');
-      image.src = safeImageSource(itemData.src);
-      image.alt = local(itemData.alt);
-      image.loading = 'lazy';
-      const overlay = document.createElement('span');
-      overlay.className = 'gallery-overlay';
-      const label = document.createElement('span');
-      label.textContent = local(itemData.label || itemData.caption || itemData.alt);
-      const arrow = document.createElement('span');
-      arrow.setAttribute('aria-hidden', 'true');
-      arrow.textContent = '↗';
-      overlay.append(label, arrow);
-      tile.append(image, overlay);
-      grid.append(tile);
-    });
-  }
-
-  function renderHours() {
-    const details = config.businessDetails || {};
-    const address = local(details.address);
-    const hours = details.hours || [];
-    $('location-block').hidden = !address;
-    $('business-address').textContent = address;
-    $('business-address-note').textContent = local(details.addressNote);
-    $('hours-block').hidden = hours.length === 0;
-    $('hours-note').textContent = local(details.hoursNote);
-    const list = $('hours-list');
-    list.replaceChildren();
-    hours.forEach(item => {
-      const row = document.createElement('div');
-      row.className = 'hours-row';
-      const label = document.createElement('span');
-      label.textContent = local(item.label);
-      const value = document.createElement('span');
-      value.textContent = local(item.value);
-      row.append(label, value);
-      list.append(row);
-    });
-    $('visit-card').hidden = !address && hours.length === 0 && !(config.contact?.phone || config.contact?.email || config.contact?.whatsapp || config.contact?.socials?.length);
-  }
-
-  function addContactLink(parent, label, value, href, external = false) {
-    if (!value || !href) return;
-    const link = document.createElement('a');
-    link.href = href;
-    link.textContent = `${label}: ${value}`;
-    if (external) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
-    parent.append(link);
-  }
-
-  function renderContacts() {
-    const contact = config.contact || {};
-    const links = $('contact-links');
-    links.replaceChildren();
-    const phone = String(contact.phone || '').trim();
-    const email = String(contact.email || '').trim();
-    const whatsapp = String(contact.whatsapp || '').replace(/\D/g, '');
-    addContactLink(links, t('phoneLabel'), phone, phone ? 'tel:' + phone.replace(/[^\d+]/g, '') : '');
-    addContactLink(links, t('emailLabel'), email, email ? 'mailto:' + email : '');
-    addContactLink(links, t('whatsappLabel'), contact.whatsappLabel || contact.whatsapp || '', whatsapp ? `https://wa.me/${whatsapp}` : '', true);
-    for (const social of contact.socials || []) addContactLink(links, social.label, social.handle || social.url, validHttpsUrl(social.url), true);
-    $('contact-block').hidden = links.childElementCount === 0;
-  }
-
-  function externalAction(type) {
-    const contact = config.contact || {};
-    if (type === 'whatsapp' && contact.whatsapp) return `https://wa.me/${String(contact.whatsapp).replace(/\D/g, '')}`;
-    if (type === 'phone' && contact.phone) return 'tel:' + contact.phone.replace(/[^\d+]/g, '');
-    if (type === 'email' && contact.email) return 'mailto:' + contact.email;
-    if (type === 'contact') return $('contact-block').hidden ? '' : '#contact-block';
-    if (type === 'visit') return $('visit-card').hidden ? '' : '#visit-card';
-    return '';
-  }
-
-  function makeBasicAction(container, key, className) {
-    container.replaceChildren();
-    const configured = config.actions?.basic?.[key];
-    if (!configured) return;
-    const href = configured.type === 'section'
-      ? (['#visit', '#visit-card', '#services', '#gallery', '#story'].includes(configured.target) && $(configured.target.slice(1)) && !$(configured.target.slice(1)).hidden ? configured.target : '')
-      : externalAction(configured.type);
-    if (!href) return;
-    const link = document.createElement('a');
-    link.className = className;
-    link.href = href;
-    link.append(document.createTextNode(local(configured.label) + ' '));
-    const arrow = document.createElement('span');
-    arrow.className = 'button-arrow';
-    arrow.setAttribute('aria-hidden', 'true');
-    arrow.textContent = '↗';
-    link.append(arrow);
-    container.append(link);
-  }
-
-  function makeBookingAction(container, className, key) {
-    container.replaceChildren();
-    if (mode !== 'booking') return;
-    const action = document.createElement(bookingUrl && bookingMode === 'external' ? 'a' : 'button');
-    action.className = className;
-    if (bookingUrl && bookingMode === 'external') {
-      action.href = bookingUrl;
-      action.target = '_blank';
-      action.rel = 'noopener noreferrer';
-      action.setAttribute('aria-label', `${t(key)} — ${t('bookingOpenExternal')}`);
-    } else if (bookingUrl && bookingMode === 'modal') {
-      action.type = 'button';
-      action.setAttribute('aria-haspopup', 'dialog');
-      action.addEventListener('click', () => openBookingModal(action));
-    } else {
-      action.type = 'button';
-      action.addEventListener('click', showBookingStatus);
-    }
-    action.append(document.createTextNode(t(key) + ' '));
-    const arrow = document.createElement('span');
-    arrow.className = 'button-arrow';
-    arrow.setAttribute('aria-hidden', 'true');
-    arrow.textContent = '↗';
-    action.append(arrow);
-    container.append(action);
-  }
-
-  function renderActions() {
-    const header = $('header-booking-action');
-    const hero = $('hero-primary-action');
-    const manifesto = $('manifesto-primary-action');
-    const visit = $('visit-primary-action');
-    if (mode === 'booking') {
-      makeBookingAction(header, 'button button-outline header-book', 'bookNow');
-      makeBookingAction(hero, 'button button-gold', 'heroBooking');
-      makeBookingAction(manifesto, 'button button-gold', 'manifestoBooking');
-      makeBookingAction(visit, 'button button-dark', 'visitBooking');
-    } else {
-      header.replaceChildren();
-      makeBasicAction(hero, 'primary', 'button button-gold');
-      makeBasicAction(manifesto, 'manifesto', 'button button-gold');
-      makeBasicAction(visit, 'visit', 'button button-dark');
-    }
-  }
-
-  function showBookingStatus() {
-    const status = $('booking-status');
-    if (!status) return;
-    status.hidden = false;
-    status.textContent = bookingUrlWasProvided ? t('bookingInvalidUrl') : t('bookingNotConfigured');
-    status.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-  }
-
-  const bookingModal = $('booking-modal');
-  let previousBookingFocus = null;
-  let inertBackground = [];
-  function openBookingModal(trigger) {
-    if (!bookingModal || !bookingUrl || bookingMode !== 'modal') { showBookingStatus(); return; }
-    previousBookingFocus = trigger || document.activeElement;
-    const frame = $('booking-frame');
-    frame.src = bookingUrl;
-    $('booking-fallback').href = bookingUrl;
-    $('booking-fallback').hidden = false;
-    bookingModal.hidden = false;
-    inertBackground = [...document.body.children]
-      .filter(element => element !== bookingModal)
-      .map(element => [element, element.inert]);
-    inertBackground.forEach(([element]) => { element.inert = true; });
-    document.body.classList.add('modal-open');
-    $('booking-modal-close').focus();
-  }
-  function closeBookingModal() {
-    if (!bookingModal || bookingModal.hidden) return;
-    bookingModal.hidden = true;
-    $('booking-frame').removeAttribute('src');
-    $('booking-fallback').removeAttribute('href');
-    $('booking-fallback').hidden = true;
-    inertBackground.forEach(([element, wasInert]) => { element.inert = wasInert; });
-    inertBackground = [];
-    document.body.classList.remove('modal-open');
-    previousBookingFocus?.focus();
-  }
-  if (bookingModal) {
-    $('booking-modal-close').addEventListener('click', closeBookingModal);
-    bookingModal.addEventListener('click', event => { if (event.target === bookingModal) closeBookingModal(); });
-  }
-
-  $('lang-toggle').addEventListener('click', () => {
-    const next = languages.find(candidate => candidate !== language);
-    if (!next) return;
-    language = next;
-    applyTranslations();
-    if ($('booking-status') && !$('booking-status').hidden) showBookingStatus();
+ 'use strict';
+ const config=window.VYB_CONFIG;
+ if(!config)throw new Error('Missing config.js');
+ const types=()=>config.services.map(s=>s.id);
+ const todayLocal=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+ const emailValid=v=>typeof v==='string'&&v.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+ function validDate(value,today=todayLocal()){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(value||''))return false;
+  const [y,m,d]=value.split('-').map(Number),date=new Date(y,m-1,d);
+  return date.getFullYear()===y&&date.getMonth()===m-1&&date.getDate()===d&&value>=today;
+ }
+ function validate(values,today=todayLocal()){
+  const e={};
+  if(!values.fullName?.trim())e.fullName='required';else if(values.fullName.trim().length<2||values.fullName.trim().length>100)e.fullName='errorName';
+  if(!values.email?.trim())e.email='required';else if(!emailValid(values.email.trim()))e.email='errorEmail';
+  if(!values.date)e.date='required';else if(!validDate(values.date,today))e.date='errorDate';
+  if(!types().includes(values.eventType))e.eventType='errorType';
+  if(!String(values.guests||'').trim())e.guests='required';else if(!/^\d+$/.test(String(values.guests))||Number(values.guests)<1||Number(values.guests)>5000)e.guests='errorGuests';
+  if((values.message||'').length>2000)e.message='errorMessage';return e;
+ }
+ function getEndpoint(settings=config){const f=settings.contact?.form;return f?.provider==='formspree'&&f.enabled===true&&f.recipientConfirmed===true&&/^[a-zA-Z0-9]{6,32}$/.test(f.formId||'')?'https://formspree.io/f/'+f.formId:'';}
+ function validHttpsUrl(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}}
+ function safeImageSource(value){return typeof value==='string'&&/^assets\/[a-zA-Z0-9_./-]+\.(webp|png|jpe?g|avif|svg)$/i.test(value)&&!value.split('/').includes('..')?value:'';}
+ async function send(values,options={}){
+  const errors=validate(values,options.today);if(Object.keys(errors).length)return {status:'invalid',errors};
+  const endpoint=getEndpoint(options.config||config);if(!endpoint)return {status:'pending'};
+  if(values._gotcha)return {status:'error'};
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),options.timeoutMs||15000);
+  try{
+   const response=await(options.fetchImpl||fetch)(endpoint,{method:'POST',headers:{Accept:'application/json','Content-Type':'application/json'},credentials:'omit',redirect:'error',referrerPolicy:'no-referrer',signal:controller.signal,body:JSON.stringify({name:values.fullName.trim(),email:values.email.trim(),date:values.date,celebration:values.eventType,guests:Number(values.guests),message:(values.message||'').trim(),language:values.language==='es'?'es':'en',_subject:config.business.name+' — Event enquiry',_gotcha:''})});
+   const data=await response.json().catch(()=>null);return {status:response.status===429?'limit':response.ok&&data?.ok===true?'success':'error'};
+  }catch{return {status:'network'};}finally{clearTimeout(timer);}
+ }
+ window.VYB_EVENT_HELPERS={validate,validDate,emailValid,getEndpoint,send,validHttpsUrl,safeImageSource,todayLocal};
+ if(typeof document==='undefined')return;
+ const $=id=>document.getElementById(id);
+ let language='en';try{const stored=localStorage.getItem(config.language.storageKey);if(['en','es'].includes(stored))language=stored;}catch{}
+ const local=v=>v&&typeof v==='object'?(v[language]??v.en??''):(v??'');
+ const t=key=>config.translations[language][key]||key;
+ const node=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
+ const motion=()=>matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+ function photo(key,cls=''){const item=config.images[key],img=node('img',cls);img.src=safeImageSource(item.src);img.alt=local(item.alt);img.loading='lazy';img.decoding='async';img.width=900;img.height=1100;return img;}
+ const observer='IntersectionObserver' in window?new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.08}):null;
+ function reveal(){document.querySelectorAll('.reveal:not(.visible)').forEach(el=>observer?observer.observe(el):el.classList.add('visible'));}
+ function renderServices(){
+  $('service-list').replaceChildren();
+  config.services.forEach((service,i)=>{
+   const card=node('article','service-card reveal'),visual=node('div','service-image'),top=node('div','service-top');visual.append(photo(service.image));top.append(node('h3','',local(service.title)),node('span','',String(i+1).padStart(2,'0')));
+   const link=node('a','underlined');link.href='#enquiry';link.dataset.eventType=service.id;link.append(node('span','',t('serviceCTA')),node('span','','↗'));card.append(visual,top,node('p','',local(service.description)),link);$('service-list').append(card);
   });
-
-  const menuButton = $('menu-toggle');
-  const nav = $('main-nav');
-  function closeMenu() {
-    nav.classList.remove('is-open');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', t('openMenu'));
-  }
-  menuButton.addEventListener('click', () => {
-    const open = !nav.classList.contains('is-open');
-    nav.classList.toggle('is-open', open);
-    menuButton.setAttribute('aria-expanded', String(open));
-    menuButton.setAttribute('aria-label', t(open ? 'closeMenu' : 'openMenu'));
-  });
-  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-  document.querySelectorAll('.footer-right a, .brand').forEach(link => link.addEventListener('click', closeMenu));
-
-  const siteHeader = document.querySelector('.site-header');
-  const themedSections = [...document.querySelectorAll('[data-header-theme]')];
-  let themeFrame = 0;
-  function updateHeaderTheme() {
-    themeFrame = 0;
-    const marker = siteHeader.getBoundingClientRect().bottom + 1;
-    const current = themedSections.find(section => {
-      const rect = section.getBoundingClientRect();
-      return rect.top <= marker && rect.bottom > marker;
-    });
-    siteHeader.classList.toggle('header-light', current?.dataset.headerTheme === 'light');
-  }
-  function scheduleHeaderThemeUpdate() {
-    if (!themeFrame) themeFrame = window.requestAnimationFrame(updateHeaderTheme);
-  }
-  window.addEventListener('scroll', scheduleHeaderThemeUpdate, { passive: true });
-  window.addEventListener('resize', scheduleHeaderThemeUpdate);
-
-  const lightbox = $('image-lightbox');
-  const lightboxImage = $('lightbox-image');
-  let previousGalleryFocus = null;
-  function openLightbox(tile) {
-    const item = config.images.gallery?.[Number(tile.dataset.imageIndex)];
-    if (!item) return;
-    previousGalleryFocus = tile;
-    lightboxImage.src = safeImageSource(item.large || item.src);
-    lightboxImage.alt = local(item.alt);
-    $('lightbox-caption').textContent = local(item.caption);
-    lightbox.hidden = false;
-    document.body.classList.add('modal-open');
-    $('lightbox-close').focus();
-  }
-  function closeLightbox() {
-    lightbox.hidden = true;
-    lightboxImage.removeAttribute('src');
-    document.body.classList.remove('modal-open');
-    previousGalleryFocus?.focus();
-  }
-  $('gallery-grid').addEventListener('click', event => {
-    const tile = event.target.closest('[data-image-index]');
-    if (tile) openLightbox(tile);
-  });
-  $('lightbox-close').addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', event => {
-    if (bookingModal && !bookingModal.hidden && event.key === 'Escape') closeBookingModal();
-    if (bookingModal && !bookingModal.hidden && event.key === 'Tab') {
-      const stops = [$('booking-modal-close'), $('booking-frame'), ...(!$('booking-fallback').hidden ? [$('booking-fallback')] : [])].filter(element => element && !element.hidden);
-      const first = stops[0], last = stops.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    }
-    if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
-    if (event.key === 'Escape' && nav.classList.contains('is-open')) closeMenu();
-    if (event.key === 'Tab' && !lightbox.hidden) { event.preventDefault(); $('lightbox-close').focus(); }
-  });
-
-  function observeRevealElements() {
-    const items = [...document.querySelectorAll('.reveal:not(.is-visible)')];
-    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
-      }), { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-      items.forEach(item => observer.observe(item));
-    } else items.forEach(item => item.classList.add('is-visible'));
-  }
-
-  applyBranding();
-  applyTranslations();
-  updateHeaderTheme();
+ }
+ function renderGallery(){
+  $('gallery-grid').replaceChildren();
+  config.gallery.forEach((key,i)=>{const item=config.images[key],button=node('button','gallery-tile reveal'),visual=node('span','gallery-image'),plus=node('span','gallery-plus','+'),caption=node('span','caption',local(item.caption));button.type='button';button.setAttribute('aria-label',t('galleryOpen')+': '+local(item.alt));plus.setAttribute('aria-hidden','true');visual.append(photo(key),plus);caption.append(node('small','',String(i+1).padStart(2,'0')));button.append(visual,caption);button.addEventListener('click',()=>openGallery(i,button));$('gallery-grid').append(button);});
+ }
+ function renderExperience(){
+  $('experience-list').replaceChildren();config.experiences.forEach((item,i)=>{const row=node('div','experience-row'),copy=node('div');copy.append(node('h3','',local(item.title)),node('p','',local(item.body)));row.append(node('span','',String(i+1).padStart(2,'0')),copy);$('experience-list').append(row);});
+ }
+ const form=$('event-form'),fields=['fullName','email','date','eventType','guests','message'];let errors={},statusKey='',busy=false;
+ form.removeAttribute('inert');$('date').min=todayLocal();$('date').addEventListener('focus',()=>{$('date').min=todayLocal();});
+ function renderForm(){
+  $('form-notice').textContent=t(getEndpoint()?'ready':'pending');$('form-submit').firstElementChild.textContent=t(busy?'sending':getEndpoint()?'send':'check');$('form-submit').disabled=busy;form.setAttribute('aria-busy',String(busy));
+  fields.forEach(name=>{$('error-'+name).textContent=errors[name]?t(errors[name]):'';$(name).setAttribute('aria-invalid',String(Boolean(errors[name])));});$('form-status').textContent=statusKey?t(statusKey):'';
+ }
+ const nav=$('main-nav'),menu=$('menu-toggle'),mobile=matchMedia('(max-width:900px)');
+ function syncMenu(){const open=menu.getAttribute('aria-expanded')==='true';nav.inert=mobile.matches&&!open;menu.setAttribute('aria-label',t(open?'closeMenu':'openMenu'));}
+ function closeMenu(focus=false){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');syncMenu();if(focus)menu.focus();}
+ menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);syncMenu();});mobile.addEventListener('change',()=>closeMenu());
+ nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>closeMenu()));document.addEventListener('click',e=>{if(!e.target.closest('.site-header'))closeMenu();});
+ let selectedImage=0,previousGalleryFocus=null;const dialog=$('lightbox');
+ function updateGallery(){const item=config.images[config.gallery[selectedImage]];$('lightbox-image').src=safeImageSource(item.src);$('lightbox-image').alt=local(item.alt);$('lightbox-caption').textContent=local(item.caption);$('lightbox-counter').textContent=String(selectedImage+1).padStart(2,'0')+' / '+String(config.gallery.length).padStart(2,'0');}
+ function openGallery(i,trigger){selectedImage=i;previousGalleryFocus=trigger;updateGallery();dialog.showModal();document.body.classList.add('lightbox-open');$('lightbox-close').focus();}
+ function closeGallery(){dialog.close();}
+ dialog.addEventListener('close',()=>{document.body.classList.remove('lightbox-open');$('lightbox-image').removeAttribute('src');if(previousGalleryFocus?.isConnected)previousGalleryFocus.focus();});
+ $('lightbox-close').addEventListener('click',closeGallery);$('lightbox-prev').addEventListener('click',()=>{selectedImage=(selectedImage-1+config.gallery.length)%config.gallery.length;updateGallery();});$('lightbox-next').addEventListener('click',()=>{selectedImage=(selectedImage+1)%config.gallery.length;updateGallery();});
+ dialog.addEventListener('click',e=>{if(e.target===dialog){const b=dialog.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)closeGallery();}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true')closeMenu(true);if(dialog.open&&['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();selectedImage=(selectedImage+(e.key==='ArrowLeft'?-1:1)+config.gallery.length)%config.gallery.length;updateGallery();}});
+ function setLanguage(lang,remember=true){
+  language=lang==='es'?'es':'en';document.documentElement.lang=language;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});document.querySelectorAll('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',t(el.dataset.i18nAria)));document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=t(el.dataset.i18nPlaceholder));
+  document.querySelector('.current-lang').textContent=language.toUpperCase();document.querySelector('.next-lang').textContent=language==='en'?'ES':'EN';$('language').setAttribute('aria-label',t('switchLanguage'));
+  document.querySelectorAll('[data-business-name]').forEach(el=>el.textContent=config.business.name);document.querySelectorAll('[data-business-tagline]').forEach(el=>el.textContent=local(config.business.tagline));
+  document.querySelectorAll('[data-photo]').forEach(el=>{const item=config.images[el.dataset.photo];el.src=safeImageSource(item.src);el.alt=local(item.alt);});
+  document.title=local(config.seo.title);$('meta-description').content=local(config.seo.description);document.querySelector('meta[property="og:title"]').content=document.title;document.querySelector('meta[property="og:description"]').content=local(config.seo.description);
+  const value=$('eventType').value;$('eventType').replaceChildren(new Option(t('typePlaceholder'),''));config.services.forEach(service=>$('eventType').append(new Option(local(service.title),service.id)));$('eventType').value=value;
+  const imageWasOpen=dialog.open;renderServices();renderGallery();renderExperience();renderForm();syncMenu();reveal();
+  dialog.setAttribute('aria-label',t('galleryLabel'));$('lightbox-close').setAttribute('aria-label',t('galleryClose'));$('lightbox-prev').setAttribute('aria-label',t('galleryPrev'));$('lightbox-next').setAttribute('aria-label',t('galleryNext'));if(imageWasOpen)updateGallery();
+  $('address').textContent=local(config.contact.address);$('address').hidden=!local(config.contact.address);
+  if(remember)try{localStorage.setItem(config.language.storageKey,language);}catch{}
+ }
+ $('language').addEventListener('click',()=>setLanguage(language==='en'?'es':'en'));
+ document.addEventListener('click',e=>{const link=e.target.closest('[data-event-type]');if(!link)return;e.preventDefault();$('eventType').value=link.dataset.eventType;delete errors.eventType;renderForm();form.scrollIntoView({behavior:motion(),block:'start'});$('fullName').focus({preventScroll:true});});
+ form.addEventListener('submit',async e=>{
+  e.preventDefault();if(busy)return;const values=Object.fromEntries(new FormData(form));values.language=language;errors=validate(values);
+  if(Object.keys(errors).length){statusKey='invalid';renderForm();$(Object.keys(errors)[0]).focus();return;}
+  if(!getEndpoint()){statusKey='validPending';renderForm();$('form-status').focus({preventScroll:true});return;}
+  busy=true;statusKey='';renderForm();[...form.elements].forEach(el=>el.disabled=true);
+  const result=await send(values);busy=false;[...form.elements].forEach(el=>el.disabled=false);statusKey={success:'success',error:'errorSend',network:'errorNetwork',limit:'errorLimit',pending:'validPending'}[result.status]||'errorSend';
+  if(result.status==='success'){form.reset();errors={};}renderForm();$('form-status').focus({preventScroll:true});
+ });
+ for(const [key,value]of Object.entries(config.brand.colors)){if(['ivory','ink','sage','gold','soft'].includes(key)&&/^#[\da-f]{6}$/i.test(value))document.documentElement.style.setProperty('--'+key,value);}
+ const logo=safeImageSource(config.business.logo);if(logo){const image=node('img');image.src=logo;image.alt=config.business.name;document.querySelector('.brand-symbol').replaceChildren(image);}
+ if(emailValid(config.contact.email)){$('email-link').href='mailto:'+config.contact.email;$('email-link').textContent=config.contact.email;$('email-link').hidden=false;}
+ const insta=validHttpsUrl(config.contact.instagram);if(insta){const u=new URL(insta);if(['instagram.com','www.instagram.com'].includes(u.hostname)&&u.pathname!=='/'){$('instagram-link').href=insta;$('instagram-link').hidden=false;}}
+ const canonical=validHttpsUrl(config.seo.canonicalUrl);if(canonical){document.querySelector('link[rel="canonical"]').href=canonical;document.querySelector('meta[property="og:url"]').content=canonical;document.querySelector('meta[property="og:image"]').content=new URL(safeImageSource(config.images.reception.src),canonical).href;}
+ $('year').textContent=new Date().getFullYear();
+ let queued=false;const links=[...nav.querySelectorAll('a')];function activeNav(){queued=false;let active;links.forEach(link=>{const section=document.querySelector(link.getAttribute('href'));if(section.getBoundingClientRect().top<=160)active=link;});links.forEach(link=>active===link?link.setAttribute('aria-current','location'):link.removeAttribute('aria-current'));}
+ window.addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(activeNav);}},{passive:true});
+ setLanguage(language,false);activeNav();
 })();
